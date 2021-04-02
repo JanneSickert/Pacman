@@ -285,7 +285,9 @@ public class Game extends JPanel implements ActionListener, Konstanten{
 					drawPacman(g);
 				} else if (Var.co[y/Var.BLOCK_SIZE][x/Var.BLOCK_SIZE]==GEIST) {
 					drawGoast(g, x, y);
-					Var.geister[ghostIndex].setGhostLocation(x, y);
+					if (ghostIndex < 3) {
+						Var.geister[ghostIndex].setGhostLocation(x, y);
+					}
 					ghostIndex++;
 				} else if (Var.co[y/Var.BLOCK_SIZE][x/Var.BLOCK_SIZE]==PILLE) {
 					g.drawImage(Var.pille_img, x, y, this);
