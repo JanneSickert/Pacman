@@ -11,9 +11,12 @@ import pacman.Var;
  *
  */
 public class MyFrame extends JFrame{
+	
 	private static final long serialVersionUID = 4070509246110827584L;
+	public Gui gui = new Gui();
+	
 	public MyFrame() {
-        add(new Game());
+        add(gui);
         setTitle("Pacman");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(Var.BLOCK_SIZE * Var.ELEMENTS_X + 200, Var.BLOCK_SIZE * Var.ELEMENTS_Y);

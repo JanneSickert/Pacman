@@ -21,22 +21,110 @@ import javax.swing.ImageIcon;
  */
 public class Var implements Konstanten{
 
+	public static int nrOfAllPoints = 0;
+	public static int nrOfGhosts = 0;
+	public static int nrOfPills = 0;
+	public static int nrOfWalls = 0;
+	public static int nrOfVoids = 0;
+	
 	public static boolean inGame = true;
 	public static Dir dir = Dir.WAIT;
 	public static final int ELEMENTS_X = 23, ELEMENTS_Y = 19;
 	// Hier ist das Lybyrinth gespeichert.
 	public static char[][] co = new char[ELEMENTS_Y][ELEMENTS_X];
 	public static final int BLOCK_SIZE = 50;
-	public static int nrOfAllPoints = 0;
 	public static int leben = 3;
 	private static int pacman_default_position_x, pacman_default_position_y;
 	public static int nrKollidierterGeist;
 	public static Ghost[] geister = new Ghost[3];
 	public static char[] untergrund = {VOID, VOID, VOID};
-	public static Image ghost, goodGoast, pacman1, pille_img, fresspunkt,
+	public static Image ghost, goodGoast,
+	pille_img, fresspunkt, pacman1,
 	pacman2up, pacman2down, pacman2left, pacman2right,
 	pacman3up, pacman3down, pacman3left, pacman3right,
 	pacman4up, pacman4down, pacman4left, pacman4right;
+	
+	public static Image getPacmanImage(Dir dir, int anniNr) {
+		Image im = null;
+		switch (dir) {
+		case UP:
+			switch (anniNr) {
+			case 0:
+				im = pacman1;
+				break;
+			case 1:
+				im = pacman2up;
+				break;
+			case 2:
+				im = pacman3up;
+				break;
+			case 3:
+				im = pacman4up;
+				break;
+			default:
+				System.out.println("ERROR: Ungueltiger parameter in public static Image getPacman(Dir dir, int anniNr)");
+			}
+			break;
+		case LEFT:
+			switch (anniNr) {
+			case 0:
+				im = pacman1;
+				break;
+			case 1:
+				im = pacman2left;
+				break;
+			case 2:
+				im = pacman3left;
+				break;
+			case 3:
+				im = pacman4left;
+				break;
+			default:
+				System.out.println("ERROR: Ungueltiger parameter in public static Image getPacman(Dir dir, int anniNr)");
+			}
+			break;
+		case RIGHT:
+			switch (anniNr) {
+			case 0:
+				im = pacman1;
+				break;
+			case 1:
+				im = pacman2right;
+				break;
+			case 2:
+				im = pacman3right;
+				break;
+			case 3:
+				im = pacman4right;
+				break;
+			default:
+				System.out.println("ERROR: Ungueltiger parameter in public static Image getPacman(Dir dir, int anniNr)");
+			}
+			break;
+		case DOWN:
+			switch (anniNr) {
+			case 0:
+				im = pacman1;
+				break;
+			case 1:
+				im = pacman2down;
+				break;
+			case 2:
+				im = pacman3down;
+				break;
+			case 3:
+				im = pacman4down;
+				break;
+			default:
+				System.out.println("ERROR: Ungueltiger parameter in public static Image getPacman(Dir dir, int anniNr)");
+			}
+			break;
+		case WAIT:
+			im = pacman1;
+			break;
+		}
+		return im;
+	}
 	
 	public static int get_pacman_default_position_x() {
 		return pacman_default_position_x;
@@ -46,10 +134,69 @@ public class Var implements Konstanten{
 		return pacman_default_position_y;
 	}
 	
+	Count[] nrs = {
+			new Count() {
+				@Override
+				public void increment() {
+					nrOfAllPoints++;
+				}
+				@Override
+				public char getChar() {
+					return FRESSPUNKT;
+				}
+			},
+			new Count() {
+				@Override
+				public void increment() {
+					nrOfGhosts++;
+				}
+				@Override
+				public char getChar() {
+					return GEIST;
+				}
+			},
+			new Count() {
+				@Override
+				public void increment() {
+					nrOfPills++;
+				}
+				@Override
+				public char getChar() {
+					return PILLE;
+				}
+			},
+			new Count() {
+				@Override
+				public void increment() {
+					nrOfWalls++;
+				}
+				@Override
+				public char getChar() {
+					return MAUER;
+				}
+			},
+			new Count() {
+				@Override
+				public void increment() {
+					nrOfVoids++;	
+				}
+				@Override
+				public char getChar() {
+					return VOID;
+				}
+			}
+		};
+	
+	Var() {
+		for (Count c : nrs) {
+			c.count();
+		}
+	}
+	
 	public static void initVars() {
 		loadImages();
 		loadLyb();
-		countPoints();
+		new Var();
 		findPacman_default_position();
 		createGhostArray();
 	}
@@ -83,14 +230,18 @@ public class Var implements Konstanten{
 		}
 	}
 
-	private static void countPoints() {
-		for (int y = 0; y < ELEMENTS_Y; y++) {
-			for (int x = 0; x < ELEMENTS_X; x++) {
-				if (co[y][x]==FRESSPUNKT) {
-					nrOfAllPoints++;
+	abstract class Count{
+		public void count() {
+			for (int y = 0; y < ELEMENTS_Y; y++) {
+				for (int x = 0; x < ELEMENTS_X; x++) {
+					if (co[y][x] == getChar()) {
+						increment();
+					}
 				}
 			}
 		}
+		public abstract void increment();
+		public abstract char getChar();
 	}
 	
 	private static void loadImages() {
