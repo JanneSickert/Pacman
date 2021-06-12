@@ -72,15 +72,22 @@ public class Pacman implements Konstanten{
 		}
 		
 		private void checkFood() {
-			int i = 0;
-			while (i < frame.gui.data.foodPoint.length) {
-				if (frame.gui.data.foodPoint[i] != null) {
-					if (frame.gui.data.pacman.x == frame.gui.data.foodPoint[i].x && frame.gui.data.pacman.y == frame.gui.data.foodPoint[i].y) {
-						frame.gui.data.foodPoint[i] = null;
-						frame.gui.data.punkte++;
+			int l = 0;
+			while (l < frame.gui.data.foodPoint.length) {
+				if (frame.gui.data.foodPoint[l] != null) {
+					for (int x = 0; x < Var.BLOCK_SIZE; x++) {
+						for (int y = 0; y < Var.BLOCK_SIZE; y++) {
+							if (frame.gui.data.foodPoint[l] != null) {
+								if (frame.gui.data.pacman.x + x == frame.gui.data.foodPoint[l].x && frame.gui.data.pacman.y + y == frame.gui.data.foodPoint[l].y) {
+									frame.gui.data.foodPoint[l] = null;
+									frame.gui.data.punkte++;
+									break;
+								}
+							}
+						}
 					}
 				}
-				i++;
+				l++;
 			}
 		}
 		
