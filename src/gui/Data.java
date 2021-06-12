@@ -5,49 +5,49 @@ import pacman.Var;
 
 public class Data {
 	
-	class Pacman{
-		int x;
-		int y;
-		Dir dir;
-		int open;
+	public class Pacman{
+		public int x;
+		public int y;
+		public Dir dir;
+		public int open;
 	}
 	
-	class Ghost{
-		int x;
-		int y;
-		boolean eatableGhost;
+	public class Ghost{
+		public int x;
+		public int y;
+		public boolean eatableGhost;
 	}
 	
-	class Pill{
-		int x, y;
+	public class Pill{
+		public int x, y;
 	}
 	
-	class Wall{
-		int x, y;
+	public class Wall{
+		public int x, y;
 	}
 	
-	class Void{
-		int x, y;
+	public class Void{
+		public int x, y;
 	}
 	
-	class DData{
-		int punkte;
+	public class DData{
+		public int punkte;
 	}
 	
-	class FoodPoints{
-		int x, y;
+	public class FoodPoints{
+		public int x, y;
 	}
 	
-	Pacman pacman = new Pacman();
-	DData data = new DData();
-	Ghost[] ghost = new Ghost[Var.nrOfGhosts];
-	Pill[] pill = new Pill[Var.nrOfPills];
-	FoodPoints[] foodPoint = new FoodPoints[Var.nrOfAllPoints];
-	Wall[] wall = new Wall[Var.nrOfWalls];
-	Void[] voidd = new Void[Var.nrOfVoids];
-	boolean gameOver = false;
-	boolean gewonnen = true;
-	int punkte = 0;
+	public Pacman pacman = new Pacman();
+	public DData data = new DData();
+	public Ghost[] ghost = new Ghost[Var.nrOfGhosts];
+	public Pill[] pill = new Pill[Var.nrOfPills];
+	public FoodPoints[] foodPoint = new FoodPoints[Var.nrOfAllPoints];
+	public Wall[] wall = new Wall[Var.nrOfWalls];
+	public Void[] voidd = new Void[Var.nrOfVoids];
+	public boolean gameOver = false;
+	public boolean gewonnen = true;
+	public int punkte = 0;
 	
 	public Data() {
 		for (int i = 0; i < Var.nrOfGhosts; i++) {

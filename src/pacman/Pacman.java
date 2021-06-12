@@ -1,16 +1,13 @@
 package pacman;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 import gui.MyFrame;
 
-/**
- * Startklasse mit Main-Methode
- * 
- * @author Janne
- *
- */
 public class Pacman implements Konstanten{
 
-	private MyFrame frame;
+	static MyFrame frame;
 	
 	public static void main(String[] args) {
 		Var.initVars();
@@ -22,7 +19,7 @@ public class Pacman implements Konstanten{
 	 * @param index
 	 * @return the x or y coordinate
 	 */
-	private int gc(int index) {
+	static int gc(int index) {
 		return (index * Var.BLOCK_SIZE);
 	}
 	
@@ -59,6 +56,52 @@ public class Pacman implements Konstanten{
 					System.out.println("ERROR: Unexpected char at Var.co[" + x + "][" + y + "]");
 				}
 			}
+		}
+		new GameClock();
+	}
+	
+	public static class GameClock implements ActionListener{
+
+		Timer timer;
+		int anniNr = 0;
+		final int ANNI_LENGTH = 4;
+		final int[] STEP = {12, 13, 12, 13};
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+				movePacman();
+		}
+		
+		private void movePacman() {
+			int x = frame.gui.data.pacman.x;
+			int y = frame.gui.data.pacman.y;
+			switch(Var.dir) {
+			case UP:
+				frame.gui.drawPacman(x, y - STEP[anniNr], Dir.UP, anniNr);
+				break;
+			case LEFT:
+				frame.gui.drawPacman(x - STEP[anniNr], y, Dir.LEFT, anniNr);
+				break;
+			case RIGHT:
+				frame.gui.drawPacman(x + STEP[anniNr], y, Dir.RIGHT, anniNr);
+				break;
+			case DOWN:
+				frame.gui.drawPacman(x, y + STEP[anniNr], Dir.DOWN, anniNr);
+				break;
+			case WAIT:
+				anniNr = 0;
+				frame.gui.drawPacman(x, y, Dir.WAIT, anniNr);
+			}
+			if (anniNr < ANNI_LENGTH - 1) {
+				anniNr++;
+			} else {
+				anniNr = 0;
+			}
+		}
+		
+		GameClock() {
+			timer = new Timer(40, this);
+			timer.start();
 		}
 	}
 }

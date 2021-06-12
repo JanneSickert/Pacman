@@ -26,7 +26,7 @@ public class Var implements Konstanten{
 	private static int pacman_default_position_x, pacman_default_position_y;
 	
 	public static Image ghost, goodGoast,
-	pille_img, fresspunkt, pacman1,
+	pille_img, pacman1,
 	pacman2up, pacman2down, pacman2left, pacman2right,
 	pacman3up, pacman3down, pacman3left, pacman3right,
 	pacman4up, pacman4down, pacman4left, pacman4right;
@@ -217,7 +217,6 @@ public class Var implements Konstanten{
 		ghost = new ImageIcon("res/img/ghost.png").getImage();
 		goodGoast = new ImageIcon("res/img/goodGoast.png").getImage();
 		pille_img = new ImageIcon("res/img/pille.png").getImage();
-		fresspunkt = new ImageIcon("res/img/FP.png").getImage();
 		pacman1 = new ImageIcon(p + "pacman.png").getImage();
 		pacman2up = new ImageIcon(p + "up1.png").getImage();
 		pacman3up = new ImageIcon(p + "up2.png").getImage();

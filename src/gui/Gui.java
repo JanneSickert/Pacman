@@ -37,7 +37,6 @@ public class Gui extends JPanel implements Konstanten, GuiAccess{
 		if (data.gameOver) {
 			drawGameOver(g2d);
 		} else {
-			g.drawImage(Var.getPacmanImage(data.pacman.dir, data.pacman.open), data.pacman.x, data.pacman.y, this);
 			for (int i = 0; i < Var.nrOfGhosts; i++) {
 				if (data.ghost[i].eatableGhost) {
 					g.drawImage(Var.goodGoast, data.ghost[i].x, data.ghost[i].y, this);
@@ -66,8 +65,13 @@ public class Gui extends JPanel implements Konstanten, GuiAccess{
 			g2d.drawString(p, Var.BLOCK_SIZE * Var.ELEMENTS_X + 2, 80);
 			g2d.drawString(l, Var.BLOCK_SIZE * Var.ELEMENTS_X + 2, 180);
 			for (int i = 0; i < Var.nrOfAllPoints; i++) {
-				g.drawImage(Var.fresspunkt, data.foodPoint[i].x, data.foodPoint[i].y, this);
+				final int START_X = 22, START_Y = 21, SIZE = 4;
+				if (data.foodPoint[i] != null) {
+					g.setColor(Color.ORANGE);
+					g.fillOval(data.foodPoint[i].x + START_X, data.foodPoint[i].y + START_Y, SIZE, SIZE);
+				}
 			}
+			g.drawImage(Var.getPacmanImage(data.pacman.dir, data.pacman.open), data.pacman.x, data.pacman.y, this);
 			g.drawLine(Var.BLOCK_SIZE * Var.ELEMENTS_X, 0, Var.BLOCK_SIZE * Var.ELEMENTS_X, Var.BLOCK_SIZE * Var.ELEMENTS_Y);
 		}
 		Toolkit.getDefaultToolkit().sync();
