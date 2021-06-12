@@ -14,7 +14,6 @@ public class Var implements Konstanten{
 	public static int nrOfGhosts = 0;
 	public static int nrOfPills = 0;
 	public static int nrOfWalls = 0;
-	public static int nrOfVoids = 0;
 	
 	public static boolean inGame = true;
 	public static Dir dir = Dir.WAIT;
@@ -22,7 +21,6 @@ public class Var implements Konstanten{
 
 	public static char[][] co = new char[ELEMENTS_Y][ELEMENTS_X];
 	public static final int BLOCK_SIZE = 50;
-	public static int leben = 3;
 	private static int pacman_default_position_x, pacman_default_position_y;
 	
 	public static Image ghost, goodGoast,
@@ -160,16 +158,6 @@ public class Var implements Konstanten{
 				@Override
 				public char getChar() {
 					return MAUER;
-				}
-			},
-			new Count() {
-				@Override
-				public void increment() {
-					nrOfVoids++;	
-				}
-				@Override
-				public char getChar() {
-					return VOID;
 				}
 			}
 		};

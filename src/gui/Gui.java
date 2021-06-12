@@ -51,14 +51,10 @@ public class Gui extends JPanel implements Konstanten, GuiAccess{
 				g.setColor(Color.MAGENTA);
 				g.fillRect(data.wall[i].x, data.wall[i].y, Var.BLOCK_SIZE, Var.BLOCK_SIZE);
 			}
-			for (int i = 0; i < Var.nrOfVoids; i++) {
-				g.setColor(Color.BLACK);
-				g.fillRect(data.voidd[i].x, data.voidd[i].y, Var.BLOCK_SIZE, Var.BLOCK_SIZE);
-			}
 			g2d.setColor(Color.BLUE);
 			g2d.fillRect(Var.BLOCK_SIZE * Var.ELEMENTS_X + 1, Var.BLOCK_SIZE, Var.BLOCK_SIZE * Var.ELEMENTS_X + 200, 3 * Var.BLOCK_SIZE);
 			String p = "Punkte: " + data.punkte;
-			String l = "Leben: " + Var.leben;
+			String l = "Leben: " + data.leben;
 			Font small = new Font("Helvetica", Font.BOLD, 30);
 			g2d.setColor(Color.WHITE);
 			g2d.setFont(small);
@@ -127,14 +123,6 @@ public class Gui extends JPanel implements Konstanten, GuiAccess{
 	public void drawWall(int x, int y, int index) {
 		data.wall[index].x = x;
 		data.wall[index].y = y;
-		revalidate();
-		repaint();
-	}
-
-	@Override
-	public void drawVoid(int x, int y, int index) {
-		data.voidd[index].x = x;
-		data.voidd[index].y = y;
 		revalidate();
 		repaint();
 	}

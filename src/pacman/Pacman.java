@@ -28,7 +28,6 @@ public class Pacman implements Konstanten{
 		public static int nrOfGhosts = 0;
 		public static int nrOfPills = 0;
 		public static int nrOfWalls = 0;
-		public static int nrOfVoids = 0;
 	}
 	
 	Pacman() {
@@ -50,8 +49,7 @@ public class Pacman implements Konstanten{
 					frame.gui.drawFoodPoint(gc(x), gc(y), Index.nrOfAllPoints);
 					Index.nrOfAllPoints++;
 				} else if (Var.co[y][x] == VOID) {
-					frame.gui.drawVoid(gc(x), gc(y), Index.nrOfVoids);
-					Index.nrOfVoids++;
+					// Do nothing.
 				} else {
 					System.out.println("ERROR: Unexpected char at Var.co[" + x + "][" + y + "]");
 				}
@@ -69,7 +67,21 @@ public class Pacman implements Konstanten{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-				movePacman();
+			movePacman();
+			checkFood();
+		}
+		
+		private void checkFood() {
+			int i = 0;
+			while (i < frame.gui.data.foodPoint.length) {
+				if (frame.gui.data.foodPoint[i] != null) {
+					if (frame.gui.data.pacman.x == frame.gui.data.foodPoint[i].x && frame.gui.data.pacman.y == frame.gui.data.foodPoint[i].y) {
+						frame.gui.data.foodPoint[i] = null;
+						frame.gui.data.punkte++;
+					}
+				}
+				i++;
+			}
 		}
 		
 		private void movePacman() {
@@ -89,8 +101,7 @@ public class Pacman implements Konstanten{
 				frame.gui.drawPacman(x, y + STEP[anniNr], Dir.DOWN, anniNr);
 				break;
 			case WAIT:
-				anniNr = 0;
-				frame.gui.drawPacman(x, y, Dir.WAIT, anniNr);
+				frame.gui.drawPacman(x, y, Dir.WAIT, 0);
 			}
 			if (anniNr < ANNI_LENGTH - 1) {
 				anniNr++;

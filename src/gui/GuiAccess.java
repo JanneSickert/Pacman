@@ -17,8 +17,6 @@ public interface GuiAccess {
 	
 	public void drawWall(int x, int y, int index);
 	
-	public void drawVoid(int x, int y, int index);
-	
 	public void drawData(int punkte);
 	
 	public void drawGameOver(boolean gewonnen, int punkte);

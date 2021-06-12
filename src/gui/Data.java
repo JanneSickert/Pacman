@@ -26,10 +26,6 @@ public class Data {
 		public int x, y;
 	}
 	
-	public class Void{
-		public int x, y;
-	}
-	
 	public class DData{
 		public int punkte;
 	}
@@ -44,10 +40,10 @@ public class Data {
 	public Pill[] pill = new Pill[Var.nrOfPills];
 	public FoodPoints[] foodPoint = new FoodPoints[Var.nrOfAllPoints];
 	public Wall[] wall = new Wall[Var.nrOfWalls];
-	public Void[] voidd = new Void[Var.nrOfVoids];
 	public boolean gameOver = false;
 	public boolean gewonnen = true;
 	public int punkte = 0;
+	public int leben = 3;
 	
 	public Data() {
 		for (int i = 0; i < Var.nrOfGhosts; i++) {
@@ -61,9 +57,6 @@ public class Data {
 		}
 		for (int i = 0; i < Var.nrOfWalls; i++) {
 			wall[i] = new Wall();
-		}
-		for (int i = 0; i < Var.nrOfVoids; i++) {
-			voidd[i] = new Void();
 		}
 	}
 }
