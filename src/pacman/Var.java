@@ -8,17 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
-/**
- * Hier befindet sich die Variablenverwaltung die in
- * folgenden Schritten durchgefürt wird:
- * Bilder werden geladen,
- * Lybyrinth wird geladen,
- * Fresspunkte werden gezählt,
- * Geister werden erstellt.
- * 
- * @author Janne
- *
- */
 public class Var implements Konstanten{
 
 	public static int nrOfAllPoints = 0;
@@ -30,14 +19,12 @@ public class Var implements Konstanten{
 	public static boolean inGame = true;
 	public static Dir dir = Dir.WAIT;
 	public static final int ELEMENTS_X = 23, ELEMENTS_Y = 19;
-	// Hier ist das Lybyrinth gespeichert.
+
 	public static char[][] co = new char[ELEMENTS_Y][ELEMENTS_X];
 	public static final int BLOCK_SIZE = 50;
 	public static int leben = 3;
 	private static int pacman_default_position_x, pacman_default_position_y;
-	public static int nrKollidierterGeist;
-	public static Ghost[] geister = new Ghost[3];
-	public static char[] untergrund = {VOID, VOID, VOID};
+	
 	public static Image ghost, goodGoast,
 	pille_img, fresspunkt, pacman1,
 	pacman2up, pacman2down, pacman2left, pacman2right,
@@ -198,25 +185,6 @@ public class Var implements Konstanten{
 		loadLyb();
 		new Var();
 		findPacman_default_position();
-		createGhostArray();
-	}
-	
-	private static void createGhostArray() {
-		int ghost_default_position_x[] = new int[3];
-		int ghost_default_position_y[] = new int[3];
-		int index = 0;
-		for (int y = 0; y < ELEMENTS_Y; y++) {
-			for (int x = 0; x < ELEMENTS_X; x++) {
-				if (co[y][x]==GEIST) {
-					ghost_default_position_x[index] = x;
-					ghost_default_position_y[index] = y;
-					index++;
-				}
-			}
-		}
-		for (int i = 0; i < 3; i++) {
-			geister[i] = new Ghost(i, ghost_default_position_x[i], ghost_default_position_y[i]);
-		}
 	}
 	
 	private static void findPacman_default_position() {

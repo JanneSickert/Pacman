@@ -40,7 +40,7 @@ public class Data {
 	
 	Pacman pacman = new Pacman();
 	DData data = new DData();
-	Ghost[] ghost = new Ghost[Var.geister.length];
+	Ghost[] ghost = new Ghost[Var.nrOfGhosts];
 	Pill[] pill = new Pill[Var.nrOfPills];
 	FoodPoints[] foodPoint = new FoodPoints[Var.nrOfAllPoints];
 	Wall[] wall = new Wall[Var.nrOfWalls];
@@ -50,7 +50,7 @@ public class Data {
 	int punkte = 0;
 	
 	public Data() {
-		for (int i = 0; i < Var.geister.length; i++) {
+		for (int i = 0; i < Var.nrOfGhosts; i++) {
 			ghost[i] = new Ghost();
 		}
 		for (int i = 0; i < Var.nrOfPills; i++) {
