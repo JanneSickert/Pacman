@@ -14,8 +14,7 @@ public class Var implements Konstanten{
 	public static int nrOfGhosts = 0;
 	public static int nrOfPills = 0;
 	public static int nrOfWalls = 0;
-	
-	public static boolean inGame = true;
+
 	public static Dir dir = Dir.WAIT;
 	public static final int ELEMENTS_X = 23, ELEMENTS_Y = 19;
 

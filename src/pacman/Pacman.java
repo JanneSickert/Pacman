@@ -73,10 +73,13 @@ public class Pacman implements Konstanten {
 				checkFood();
 				checkPill();
 			}
-			takts--;
+			if (takts > 0) {
+				takts--;
+			}
 			if (takts == 0) {
 				frame.gui.data.pacmanCanEatGhosts = false;
 			}
+			checkGhost();
 		}
 
 		private boolean checkWall() {
@@ -129,6 +132,32 @@ public class Pacman implements Konstanten {
 			return true;
 		}
 
+		private void checkGhost() {
+			int l = 0;
+			while (l < frame.gui.data.ghost.length) {
+				if (frame.gui.data.ghost[l] != null) {
+					for (int x = 0; x < Var.BLOCK_SIZE; x++) {
+						for (int y = 0; y < Var.BLOCK_SIZE; y++) {
+							if (frame.gui.data.pacman.x + x == frame.gui.data.ghost[l].x
+									&& frame.gui.data.pacman.y + y == frame.gui.data.ghost[l].y) {
+								if (frame.gui.data.pacmanCanEatGhosts) {
+									frame.gui.data.ghost[l] = null;
+									frame.gui.data.punkte += 100;
+								} else {
+									frame.gui.data.leben--;
+									frame.gui.drawPacman(gc(Var.get_pacman_default_position_x()), gc(Var.get_pacman_default_position_y()), Dir.WAIT, 0);
+								}
+								y = Var.BLOCK_SIZE;
+								x = Var.BLOCK_SIZE;
+								break;
+							}
+						}
+					}
+				}
+				l++;
+			}
+		}
+
 		private void checkPill() {
 			final int PILL_BONI = 32;
 			int l = 0;
@@ -136,15 +165,14 @@ public class Pacman implements Konstanten {
 				if (frame.gui.data.pill[l] != null) {
 					for (int x = 0; x < Var.BLOCK_SIZE; x++) {
 						for (int y = 0; y < Var.BLOCK_SIZE; y++) {
-							if (frame.gui.data.pill[l] != null) {
-								if (frame.gui.data.pacman.x + x == frame.gui.data.pill[l].x
-										&& frame.gui.data.pacman.y + y == frame.gui.data.pill[l].y) {
-									frame.gui.data.pill[l] = null;
-									frame.gui.data.pacmanCanEatGhosts = true;
-									frame.gui.data.punkte += PILL_BONI;
-									takts = 200;
-									break;
-								}
+							if (frame.gui.data.pacman.x + x == frame.gui.data.pill[l].x
+									&& frame.gui.data.pacman.y + y == frame.gui.data.pill[l].y) {
+								frame.gui.data.pill[l] = null;
+								frame.gui.data.pacmanCanEatGhosts = true;
+								frame.gui.data.punkte += PILL_BONI;
+								takts = 200;
+								y = Var.BLOCK_SIZE;
+								x = Var.BLOCK_SIZE;
 							}
 						}
 					}
@@ -159,13 +187,13 @@ public class Pacman implements Konstanten {
 				if (frame.gui.data.foodPoint[l] != null) {
 					for (int x = 0; x < Var.BLOCK_SIZE; x++) {
 						for (int y = 0; y < Var.BLOCK_SIZE; y++) {
-							if (frame.gui.data.foodPoint[l] != null) {
-								if (frame.gui.data.pacman.x + x == frame.gui.data.foodPoint[l].x
-										&& frame.gui.data.pacman.y + y == frame.gui.data.foodPoint[l].y) {
-									frame.gui.data.foodPoint[l] = null;
-									frame.gui.data.punkte++;
-									break;
-								}
+							if (frame.gui.data.pacman.x + x == frame.gui.data.foodPoint[l].x
+									&& frame.gui.data.pacman.y + y == frame.gui.data.foodPoint[l].y) {
+								frame.gui.data.foodPoint[l] = null;
+								frame.gui.data.punkte++;
+								x = Var.BLOCK_SIZE;
+								y = Var.BLOCK_SIZE;
+								break;
 							}
 						}
 					}

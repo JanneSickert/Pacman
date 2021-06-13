@@ -4,9 +4,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /**
- * Hier befindet sich die Steuerung des Spiels.
- * Das Spiel wird mit den
- * Tasten a, s, d, w gesteuert.
+ * 
+ * Here is the keyboard control of the game.
+ * Pacman can be move with the keys:
+ * a, s, d, w
  * 
  * @author Janne
  *
@@ -18,7 +19,7 @@ public class Tastatur extends KeyAdapter{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		if (Var.inGame) {
+		if (!(pacman.Pacman.frame.gui.data.gameOver)) {
 			if (a == key) {
 				Var.dir = Dir.LEFT;
 			} else if (s == key) {
@@ -34,7 +35,7 @@ public class Tastatur extends KeyAdapter{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
-		if (Var.inGame) {
+		if (!(pacman.Pacman.frame.gui.data.gameOver)) {
 			if (a == key) {
 				Var.dir = Dir.WAIT;
 			} else if (s == key) {
