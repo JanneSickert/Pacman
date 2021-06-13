@@ -65,6 +65,7 @@ public class Pacman implements Konstanten {
 		final int ANNI_LENGTH = 4;
 		final int STEP = 15;
 		private int takts = 0;
+		private final int PILL_BONI = 32, GHOST_POINTS = 100;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -80,6 +81,14 @@ public class Pacman implements Konstanten {
 				frame.gui.data.pacmanCanEatGhosts = false;
 			}
 			checkGhost();
+			checkWinn();
+		}
+		
+		private void checkWinn() {
+			final int MAX_POINTS = Var.nrOfAllPoints + (Var.nrOfPills * PILL_BONI) + (Var.nrOfGhosts * GHOST_POINTS);
+			if (frame.gui.data.punkte == MAX_POINTS) {
+				frame.gui.drawGameOver(true);
+			}
 		}
 
 		private boolean checkWall() {
@@ -142,7 +151,7 @@ public class Pacman implements Konstanten {
 									&& frame.gui.data.pacman.y + y == frame.gui.data.ghost[l].y) {
 								if (frame.gui.data.pacmanCanEatGhosts) {
 									frame.gui.data.ghost[l] = null;
-									frame.gui.data.punkte += 100;
+									frame.gui.data.punkte += GHOST_POINTS;
 								} else {
 									frame.gui.data.leben--;
 									frame.gui.drawPacman(gc(Var.get_pacman_default_position_x()), gc(Var.get_pacman_default_position_y()), Dir.WAIT, 0);
@@ -162,7 +171,6 @@ public class Pacman implements Konstanten {
 		}
 
 		private void checkPill() {
-			final int PILL_BONI = 32;
 			int l = 0;
 			while (l < frame.gui.data.pill.length) {
 				if (frame.gui.data.pill[l] != null) {
