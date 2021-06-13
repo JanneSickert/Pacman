@@ -37,7 +37,7 @@ public class Pacman implements Konstanten {
 				if (Var.co[y][x] == PACMAN) {
 					frame.gui.drawPacman(gc(x), gc(y), Dir.WAIT, 0);
 				} else if (Var.co[y][x] == GEIST) {
-					frame.gui.drawGhost(gc(x), gc(y), false, Index.nrOfGhosts);
+					frame.gui.drawGhost(gc(x), gc(y), Index.nrOfGhosts);
 					Index.nrOfGhosts++;
 				} else if (Var.co[y][x] == PILLE) {
 					frame.gui.drawPill(gc(x), gc(y), Index.nrOfPills);
@@ -64,19 +64,25 @@ public class Pacman implements Konstanten {
 		int anniNr = 0;
 		final int ANNI_LENGTH = 4;
 		final int STEP = 15;
+		private int takts = 0;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (checkWall()) {
 				movePacman();
 				checkFood();
+				checkPill();
+			}
+			takts--;
+			if (takts == 0) {
+				frame.gui.data.pacmanCanEatGhosts = false;
 			}
 		}
 
 		private boolean checkWall() {
 			int lx = frame.gui.data.pacman.x;
 			int ly = frame.gui.data.pacman.y;
-			int next_x[] = {-1, -1}, next_y[] = {-1, -1};
+			int next_x[] = { -1, -1 }, next_y[] = { -1, -1 };
 			switch (Var.dir) {
 			case UP:
 				next_x[0] = lx;
@@ -112,7 +118,8 @@ public class Pacman implements Konstanten {
 				for (int y = 0; y < Var.BLOCK_SIZE; y++) {
 					for (int x = 0; x < Var.BLOCK_SIZE; x++) {
 						for (int m = 0; m < 2; m++) {
-							if (frame.gui.data.wall[i].x + x == next_x[m] && frame.gui.data.wall[i].y + y == next_y[m]) {
+							if (frame.gui.data.wall[i].x + x == next_x[m]
+									&& frame.gui.data.wall[i].y + y == next_y[m]) {
 								return false;
 							}
 						}
@@ -120,6 +127,30 @@ public class Pacman implements Konstanten {
 				}
 			}
 			return true;
+		}
+
+		private void checkPill() {
+			final int PILL_BONI = 32;
+			int l = 0;
+			while (l < frame.gui.data.pill.length) {
+				if (frame.gui.data.pill[l] != null) {
+					for (int x = 0; x < Var.BLOCK_SIZE; x++) {
+						for (int y = 0; y < Var.BLOCK_SIZE; y++) {
+							if (frame.gui.data.pill[l] != null) {
+								if (frame.gui.data.pacman.x + x == frame.gui.data.pill[l].x
+										&& frame.gui.data.pacman.y + y == frame.gui.data.pill[l].y) {
+									frame.gui.data.pill[l] = null;
+									frame.gui.data.pacmanCanEatGhosts = true;
+									frame.gui.data.punkte += PILL_BONI;
+									takts = 200;
+									break;
+								}
+							}
+						}
+					}
+				}
+				l++;
+			}
 		}
 
 		private void checkFood() {

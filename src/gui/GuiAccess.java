@@ -11,7 +11,7 @@ public interface GuiAccess {
 
 	public void drawPacman(int x, int y, Dir dir, int open);
 	
-	public void drawGhost(int x, int y, boolean eatableGhost, int index);
+	public void drawGhost(int x, int y, int index);
 	
 	public void drawPill(int x, int y, int index);
 	

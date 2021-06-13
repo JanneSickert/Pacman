@@ -15,7 +15,6 @@ public class Data {
 	public class Ghost{
 		public int x;
 		public int y;
-		public boolean eatableGhost;
 	}
 	
 	public class Pill{
@@ -44,6 +43,7 @@ public class Data {
 	public boolean gewonnen = true;
 	public int punkte = 0;
 	public int leben = 3;
+	public boolean pacmanCanEatGhosts = false;
 	
 	public Data() {
 		for (int i = 0; i < Var.nrOfGhosts; i++) {
