@@ -146,6 +146,9 @@ public class Pacman implements Konstanten {
 								} else {
 									frame.gui.data.leben--;
 									frame.gui.drawPacman(gc(Var.get_pacman_default_position_x()), gc(Var.get_pacman_default_position_y()), Dir.WAIT, 0);
+									if (frame.gui.data.leben == 0) {
+										frame.gui.drawGameOver(false);
+									}
 								}
 								y = Var.BLOCK_SIZE;
 								x = Var.BLOCK_SIZE;

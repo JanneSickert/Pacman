@@ -19,7 +19,7 @@ public interface GuiAccess {
 	
 	public void drawData(int punkte);
 	
-	public void drawGameOver(boolean gewonnen, int punkte);
+	public void drawGameOver(boolean gewonnen);
 	
 	public void drawFoodPoint(int x, int y, int index);
 }

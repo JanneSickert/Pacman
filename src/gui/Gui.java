@@ -138,9 +138,8 @@ public class Gui extends JPanel implements Konstanten, GuiAccess{
 	}
 
 	@Override
-	public void drawGameOver(boolean gewonnen, int punkte) {
+	public void drawGameOver(boolean gewonnen) {
 		data.gewonnen = gewonnen;
-		data.punkte = punkte;
 		data.gameOver = true;
 		revalidate();
 		repaint();
