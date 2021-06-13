@@ -20,7 +20,7 @@ public class Var implements Konstanten{
 	public static final int ELEMENTS_X = 23, ELEMENTS_Y = 19;
 
 	public static char[][] co = new char[ELEMENTS_Y][ELEMENTS_X];
-	public static final int BLOCK_SIZE = 50;
+	public static final int BLOCK_SIZE = 60;
 	private static int pacman_default_position_x, pacman_default_position_y;
 	
 	public static Image ghost, goodGoast,

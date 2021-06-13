@@ -58,8 +58,8 @@ public class Gui extends JPanel implements Konstanten, GuiAccess{
 			Font small = new Font("Helvetica", Font.BOLD, 30);
 			g2d.setColor(Color.WHITE);
 			g2d.setFont(small);
-			g2d.drawString(p, Var.BLOCK_SIZE * Var.ELEMENTS_X + 2, 80);
-			g2d.drawString(l, Var.BLOCK_SIZE * Var.ELEMENTS_X + 2, 180);
+			g2d.drawString(p, Var.BLOCK_SIZE * Var.ELEMENTS_X + 2, 110);
+			g2d.drawString(l, Var.BLOCK_SIZE * Var.ELEMENTS_X + 2, 210);
 			for (int i = 0; i < Var.nrOfAllPoints; i++) {
 				final int START_X = 22, START_Y = 21, SIZE = 4;
 				if (data.foodPoint[i] != null) {

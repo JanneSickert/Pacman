@@ -5,15 +5,15 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import gui.MyFrame;
 
-public class Pacman implements Konstanten{
+public class Pacman implements Konstanten {
 
 	static MyFrame frame;
-	
+
 	public static void main(String[] args) {
 		Var.initVars();
 		new Pacman();
 	}
-	
+
 	/**
 	 * 
 	 * @param index
@@ -22,14 +22,14 @@ public class Pacman implements Konstanten{
 	static int gc(int index) {
 		return (index * Var.BLOCK_SIZE);
 	}
-	
-	public static class Index{
+
+	public static class Index {
 		public static int nrOfAllPoints = 0;
 		public static int nrOfGhosts = 0;
 		public static int nrOfPills = 0;
 		public static int nrOfWalls = 0;
 	}
-	
+
 	Pacman() {
 		frame = new MyFrame();
 		for (int y = 0; y < Var.co.length; y++) {
@@ -57,20 +57,71 @@ public class Pacman implements Konstanten{
 		}
 		new GameClock();
 	}
-	
-	public static class GameClock implements ActionListener{
+
+	public static class GameClock implements ActionListener {
 
 		Timer timer;
 		int anniNr = 0;
 		final int ANNI_LENGTH = 4;
-		final int[] STEP = {12, 13, 12, 13};
-		
+		final int STEP = 15;
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			movePacman();
-			checkFood();
+			if (checkWall()) {
+				movePacman();
+				checkFood();
+			}
 		}
-		
+
+		private boolean checkWall() {
+			int lx = frame.gui.data.pacman.x;
+			int ly = frame.gui.data.pacman.y;
+			int next_x[] = {-1, -1}, next_y[] = {-1, -1};
+			switch (Var.dir) {
+			case UP:
+				next_x[0] = lx;
+				next_x[1] = lx + 50;
+				next_y[0] = ly - STEP;
+				next_y[1] = ly - STEP;
+				break;
+			case LEFT:
+				next_x[0] = lx - STEP;
+				next_y[0] = ly;
+				next_x[1] = lx - STEP;
+				next_y[1] = ly + 50;
+				break;
+			case RIGHT:
+				next_x[0] = lx + 50 + STEP;
+				next_y[0] = ly;
+				next_x[1] = lx + 50 + STEP;
+				next_y[1] = ly + 50;
+				break;
+			case DOWN:
+				next_x[0] = lx;
+				next_y[0] = ly + 50 + STEP;
+				next_x[1] = 50 + lx;
+				next_y[1] = ly + 50 + STEP;
+				break;
+			case WAIT:
+				next_x[0] = lx;
+				next_x[1] = lx;
+				next_y[0] = ly;
+				next_y[1] = ly;
+			}
+			for (int i = 0; i < frame.gui.data.wall.length; i++) {
+				for (int y = 0; y < Var.BLOCK_SIZE; y++) {
+					for (int x = 0; x < Var.BLOCK_SIZE; x++) {
+						for (int m = 0; m < 2; m++) {
+							if (frame.gui.data.wall[i].x + x == next_x[m] && frame.gui.data.wall[i].y + y == next_y[m]) {
+								return false;
+							}
+						}
+					}
+				}
+			}
+			return true;
+		}
+
 		private void checkFood() {
 			int l = 0;
 			while (l < frame.gui.data.foodPoint.length) {
@@ -78,7 +129,8 @@ public class Pacman implements Konstanten{
 					for (int x = 0; x < Var.BLOCK_SIZE; x++) {
 						for (int y = 0; y < Var.BLOCK_SIZE; y++) {
 							if (frame.gui.data.foodPoint[l] != null) {
-								if (frame.gui.data.pacman.x + x == frame.gui.data.foodPoint[l].x && frame.gui.data.pacman.y + y == frame.gui.data.foodPoint[l].y) {
+								if (frame.gui.data.pacman.x + x == frame.gui.data.foodPoint[l].x
+										&& frame.gui.data.pacman.y + y == frame.gui.data.foodPoint[l].y) {
 									frame.gui.data.foodPoint[l] = null;
 									frame.gui.data.punkte++;
 									break;
@@ -90,22 +142,22 @@ public class Pacman implements Konstanten{
 				l++;
 			}
 		}
-		
+
 		private void movePacman() {
 			int x = frame.gui.data.pacman.x;
 			int y = frame.gui.data.pacman.y;
-			switch(Var.dir) {
+			switch (Var.dir) {
 			case UP:
-				frame.gui.drawPacman(x, y - STEP[anniNr], Dir.UP, anniNr);
+				frame.gui.drawPacman(x, y - STEP, Dir.UP, anniNr);
 				break;
 			case LEFT:
-				frame.gui.drawPacman(x - STEP[anniNr], y, Dir.LEFT, anniNr);
+				frame.gui.drawPacman(x - STEP, y, Dir.LEFT, anniNr);
 				break;
 			case RIGHT:
-				frame.gui.drawPacman(x + STEP[anniNr], y, Dir.RIGHT, anniNr);
+				frame.gui.drawPacman(x + STEP, y, Dir.RIGHT, anniNr);
 				break;
 			case DOWN:
-				frame.gui.drawPacman(x, y + STEP[anniNr], Dir.DOWN, anniNr);
+				frame.gui.drawPacman(x, y + STEP, Dir.DOWN, anniNr);
 				break;
 			case WAIT:
 				frame.gui.drawPacman(x, y, Dir.WAIT, 0);
@@ -116,7 +168,7 @@ public class Pacman implements Konstanten{
 				anniNr = 0;
 			}
 		}
-		
+
 		GameClock() {
 			timer = new Timer(40, this);
 			timer.start();
