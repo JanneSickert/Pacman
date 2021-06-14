@@ -3,6 +3,8 @@ package pacman;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+
+import gui.Gui;
 import gui.MyFrame;
 
 public class Pacman implements Konstanten {
@@ -11,6 +13,7 @@ public class Pacman implements Konstanten {
 
 	public static void main(String[] args) {
 		Var.initVars();
+		Gui.initColor();
 		new Pacman();
 	}
 

@@ -79,20 +79,47 @@ public class Gui extends JPanel implements Konstanten, GuiAccess{
 		}
 		Toolkit.getDefaultToolkit().sync();
 	}
+	
+	public static Color[] TEMP_MYCOLOR = {Color.MAGENTA, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE, Color.MAGENTA, Color.ORANGE, Color.YELLOW, Color.GREEN};
+	public static Color[] MYCOLOR = new Color[TEMP_MYCOLOR.length * 10];
+	
+	public static void initColor() {
+		int i = 0, k = 0;
+		while (i < MYCOLOR.length) {
+			MYCOLOR[i] = TEMP_MYCOLOR[k];
+			i++;
+			k++;
+			if (TEMP_MYCOLOR.length == k) {
+				k = 0;
+			}
+		}
+	}
 
 	public void drawGameOver(Graphics2D g2d) {
+		for (int i = 0; i < MYCOLOR.length; i++) {
+			g2d.setColor(MYCOLOR[i]);
+			g2d.fillOval((-800) + i * 50 + (Var.BLOCK_SIZE * 4),
+					(-720) + i * 50,
+					1350 + (Var.BLOCK_SIZE * Var.ELEMENTS_X - (3 * Var.BLOCK_SIZE)) - (i * 50 * 2),
+					1350 + (Var.BLOCK_SIZE * Var.ELEMENTS_Y) - (i * 50 * 2));
+		}
+		Color zwischenspeicher = MYCOLOR[MYCOLOR.length - 1];
+		for (int s = MYCOLOR.length - 2; s >= 0; s--) {
+			MYCOLOR[s + 1] = MYCOLOR[s];
+		}
+		MYCOLOR[0] = zwischenspeicher;
 		String message = null;
 		Color textColor = null;
 		if (data.gewonnen) {
 			textColor = Color.GREEN;
-			message = "Du hast mit " + data.punkte + " Punkten gewonnen.";
+			message = "   Du hast mit " + data.punkte + " Punkten gewonnen.";
 			Sound.playWin();
 		} else {
 			textColor = Color.RED;
 			message = "Du hast mit " + data.punkte + " Punkten verloren.";
 			Sound.playLost();
 		}
-		Font small = new Font("Helvetica", Font.BOLD, 40);
+		Font small = new Font("Helvetica", Font.BOLD, 85);
 		FontMetrics metr = this.getFontMetrics(small);
 		g2d.setColor(textColor);
 		g2d.setFont(small);
