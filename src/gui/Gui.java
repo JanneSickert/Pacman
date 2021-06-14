@@ -37,6 +37,11 @@ public class Gui extends JPanel implements Konstanten, GuiAccess{
 		if (data.gameOver) {
 			drawGameOver(g2d);
 		} else {
+			for (int i = 0; i < Var.nrOfPills; i++) {
+				if (data.pill[i] != null) {
+					g.drawImage(Var.pille_img, data.pill[i].x, data.pill[i].y, this);
+				}
+			}
 			for (int i = 0; i < Var.nrOfGhosts; i++) {
 				if (data.ghost[i] != null) {
 					if (data.pacmanCanEatGhosts) {
@@ -44,11 +49,6 @@ public class Gui extends JPanel implements Konstanten, GuiAccess{
 					} else {
 						g.drawImage(Var.ghost, data.ghost[i].x, data.ghost[i].y, this);
 					}
-				}
-			}
-			for (int i = 0; i < Var.nrOfPills; i++) {
-				if (data.pill[i] != null) {
-					g.drawImage(Var.pille_img, data.pill[i].x, data.pill[i].y, this);
 				}
 			}
 			for (int i = 0; i < Var.nrOfWalls; i++) {

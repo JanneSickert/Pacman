@@ -138,6 +138,17 @@ public class Pacman implements Konstanten {
 							}
 						}
 					}
+					int limit = 0;
+					while ((!checkWallGhost(ghostDirection[i], frame.gui.data.ghost[i].x, frame.gui.data.ghost[i].y))
+							&& limit < 10 
+							|| isGhostThere(ghostDirection[i], frame.gui.data.ghost[i].x, frame.gui.data.ghost[i].y, i)
+							&& limit < 10) {
+						ghostDirection[i] = getRandomDir();
+						limit++;
+					}
+					if (limit == 10) {
+						ghostDirection[i] = Dir.WAIT;
+					}
 				}
 			}
 			for (int i = 0; i < Var.nrOfGhosts; i++) {
@@ -168,12 +179,19 @@ public class Pacman implements Konstanten {
 				frame.gui.drawGameOver(true);
 			}
 		}
-
-		private boolean checkWall() {
-			int lx = frame.gui.data.pacman.x;
-			int ly = frame.gui.data.pacman.y;
+		
+		/**
+		 * 
+		 * @param directionGhost
+		 * @return true if there is no wall in this direction.
+		 */
+		private boolean checkWallGhost(Dir directionGhost, int lx, int ly) {
+			return (checkNextStep(directionGhost, lx, ly));
+		}
+		
+		private boolean checkNextStep(Dir direction, int lx, int ly) {
 			int next_x[] = { -1, -1 }, next_y[] = { -1, -1 };
-			switch (Var.dir) {
+			switch (direction) {
 			case UP:
 				next_x[0] = lx;
 				next_x[1] = lx + 50;
@@ -217,6 +235,62 @@ public class Pacman implements Konstanten {
 				}
 			}
 			return true;
+		}
+		
+		private boolean isGhostThere(Dir direction, int lx, int ly, int currentIndex) {
+			int next_x[] = { -1, -1 }, next_y[] = { -1, -1 };
+			switch (direction) {
+			case UP:
+				next_x[0] = lx;
+				next_x[1] = lx + 50;
+				next_y[0] = ly - STEP;
+				next_y[1] = ly - STEP;
+				break;
+			case LEFT:
+				next_x[0] = lx - STEP;
+				next_y[0] = ly;
+				next_x[1] = lx - STEP;
+				next_y[1] = ly + 50;
+				break;
+			case RIGHT:
+				next_x[0] = lx + 50 + STEP;
+				next_y[0] = ly;
+				next_x[1] = lx + 50 + STEP;
+				next_y[1] = ly + 50;
+				break;
+			case DOWN:
+				next_x[0] = lx;
+				next_y[0] = ly + 50 + STEP;
+				next_x[1] = 50 + lx;
+				next_y[1] = ly + 50 + STEP;
+				break;
+			case WAIT:
+				next_x[0] = lx;
+				next_x[1] = lx;
+				next_y[0] = ly;
+				next_y[1] = ly;
+			}
+			for (int i = 0; i < frame.gui.data.ghost.length; i++) {
+				for (int y = 0; y < Var.BLOCK_SIZE; y++) {
+					for (int x = 0; x < Var.BLOCK_SIZE; x++) {
+						for (int m = 0; m < 2; m++) {
+							if (i != currentIndex && frame.gui.data.ghost[i] != null) {
+								if (frame.gui.data.ghost[i].x + x == next_x[m]
+										&& frame.gui.data.ghost[i].y + y == next_y[m]) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+			return false;
+		}
+
+		private boolean checkWall() {
+			int lx = frame.gui.data.pacman.x;
+			int ly = frame.gui.data.pacman.y;
+			return (checkNextStep(Var.dir, lx, ly));
 		}
 
 		private void checkGhost() {
