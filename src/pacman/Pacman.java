@@ -97,6 +97,32 @@ public class Pacman implements Konstanten {
 			checkWinn();
 			moveGhost();
 			annimateWormhole();
+			jumpThroughWormhole();
+		}
+		
+		private void jumpThroughWormhole() {
+			for (int x = 0; x < Var.BLOCK_SIZE; x++) {
+				for (int y = 0; y < Var.BLOCK_SIZE; y++) {
+					if (frame.gui.data.wormhole[0].x + x == frame.gui.data.pacman.x
+							&& frame.gui.data.wormhole[0].y + y == frame.gui.data.pacman.y) {
+						frame.gui.drawPacman(frame.gui.data.wormhole[1].x - Var.BLOCK_SIZE, frame.gui.data.wormhole[1].y, Dir.LEFT, 1);
+						x = Var.BLOCK_SIZE;
+						y = Var.BLOCK_SIZE;
+						break;
+					}
+				}
+			}
+			for (int x = 0; x < Var.BLOCK_SIZE; x++) {
+				for (int y = 0; y < Var.BLOCK_SIZE; y++) {
+					if (frame.gui.data.wormhole[1].x + x == frame.gui.data.pacman.x
+							&& frame.gui.data.wormhole[1].y + y == frame.gui.data.pacman.y) {
+						frame.gui.drawPacman(frame.gui.data.wormhole[0].x + Var.BLOCK_SIZE, frame.gui.data.wormhole[0].y, Dir.RIGHT, 1);
+						x = Var.BLOCK_SIZE;
+						y = Var.BLOCK_SIZE;
+						break;
+					}
+				}
+			}
 		}
 		
 		private void annimateWormhole() {
