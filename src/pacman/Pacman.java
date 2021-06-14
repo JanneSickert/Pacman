@@ -82,8 +82,86 @@ public class Pacman implements Konstanten {
 			}
 			checkGhost();
 			checkWinn();
+			moveGhost();
 		}
 		
+		private Dir getRandomDir() {
+			final Dir[] dirArr = {Dir.UP, Dir.LEFT, Dir.RIGHT, Dir.DOWN, Dir.WAIT};
+			int randomNr = (int) Math.round((Math.random() * 5) - 1);
+			if (randomNr < 0) {
+				randomNr = 0;
+			}
+			return (dirArr[randomNr]);
+		}
+
+		private void moveGhost() {
+			Dir[] ghostDirection = new Dir[Var.nrOfGhosts];
+			boolean bb = frame.gui.data.pacmanCanEatGhosts;
+			for (int i = 0; i < Var.nrOfGhosts; i++) {
+				if (frame.gui.data.ghost[i] != null) {
+					int dif_x = frame.gui.data.ghost[i].x - frame.gui.data.pacman.x;
+					int dif_y = frame.gui.data.ghost[i].y - frame.gui.data.pacman.y;
+					if (dif_x < Var.BLOCK_SIZE * 2 && dif_x > ( - (Var.BLOCK_SIZE * 2)) || (dif_y < Var.BLOCK_SIZE * 2 && dif_y > ( - (Var.BLOCK_SIZE * 2)))) {
+						ghostDirection[i] = getRandomDir();
+					} else if (dif_x > Var.BLOCK_SIZE * 8 || dif_x < ( - (Var.BLOCK_SIZE * 8)) || (dif_y > Var.BLOCK_SIZE * 8 || dif_y < ( - (Var.BLOCK_SIZE * 8)))) {
+						ghostDirection[i] = getRandomDir();
+					} else {
+						if (dif_x < 0) {
+							if (bb) {
+								ghostDirection[i] = Dir.LEFT;
+							} else {
+								ghostDirection[i] = Dir.RIGHT;
+							}
+						}
+						if (dif_x > 0) {
+							if (bb) {
+								ghostDirection[i] = Dir.RIGHT;
+							} else {
+								ghostDirection[i] = Dir.LEFT;
+							}
+						}
+						if (dif_x == 120 || dif_x == -120) {
+							if (dif_y < 0) {
+								if (bb) {
+									ghostDirection[i] = Dir.UP;
+								} else {
+									ghostDirection[i] = Dir.DOWN;
+								}
+							} else if (dif_y > 0) {
+								if (bb) {
+									ghostDirection[i] = Dir.DOWN;
+								} else {
+									ghostDirection[i] = Dir.UP;
+								}
+							} else {
+								ghostDirection[i] = getRandomDir();
+							}
+						}
+					}
+				}
+			}
+			for (int i = 0; i < Var.nrOfGhosts; i++) {
+				if (ghostDirection[i] != null) {
+					switch (ghostDirection[i]) {
+					case UP:
+						frame.gui.drawGhost(frame.gui.data.ghost[i].x, frame.gui.data.ghost[i].y - STEP, i);
+						break;
+					case LEFT:
+						frame.gui.drawGhost(frame.gui.data.ghost[i].x - STEP, frame.gui.data.ghost[i].y, i);
+						break;
+					case RIGHT:
+						frame.gui.drawGhost(frame.gui.data.ghost[i].x + STEP, frame.gui.data.ghost[i].y, i);
+						break;
+					case DOWN:
+						frame.gui.drawGhost(frame.gui.data.ghost[i].x, frame.gui.data.ghost[i].y + STEP, i);
+						break;
+					case WAIT:
+						frame.gui.drawGhost(frame.gui.data.ghost[i].x, frame.gui.data.ghost[i].y, i);
+					}
+				}
+			}
+		}
+
 		private void checkWinn() {
 			final int MAX_POINTS = Var.nrOfAllPoints + (Var.nrOfPills * PILL_BONI) + (Var.nrOfGhosts * GHOST_POINTS);
 			if (frame.gui.data.punkte == MAX_POINTS) {
@@ -154,7 +232,8 @@ public class Pacman implements Konstanten {
 									frame.gui.data.punkte += GHOST_POINTS;
 								} else {
 									frame.gui.data.leben--;
-									frame.gui.drawPacman(gc(Var.get_pacman_default_position_x()), gc(Var.get_pacman_default_position_y()), Dir.WAIT, 0);
+									frame.gui.drawPacman(gc(Var.get_pacman_default_position_x()),
+											gc(Var.get_pacman_default_position_y()), Dir.WAIT, 0);
 									if (frame.gui.data.leben == 0) {
 										frame.gui.drawGameOver(false);
 									}
