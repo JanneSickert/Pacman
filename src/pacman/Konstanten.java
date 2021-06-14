@@ -7,5 +7,6 @@ public interface Konstanten {
 	PILLE = 'o',
 	GEIST = 'G',
 	FRESSPUNKT = '.',
-	VOID = 'v';
+	VOID = 'v',
+	WORMHOLE = 'w';
 }

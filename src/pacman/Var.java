@@ -26,7 +26,26 @@ public class Var implements Konstanten{
 	pille_img, pacman1,
 	pacman2up, pacman2down, pacman2left, pacman2right,
 	pacman3up, pacman3down, pacman3left, pacman3right,
-	pacman4up, pacman4down, pacman4left, pacman4right;
+	pacman4up, pacman4down, pacman4left, pacman4right,
+	wormhole1, wormhole2, wormhole3;
+	
+	public static Image getWormholeImage(int anniNr) {
+		Image im = null;
+		switch (anniNr) {
+		case 0:
+			im = wormhole1;
+			break;
+		case 1:
+			im = wormhole2;
+			break;
+		case 2:
+			im = wormhole3;
+			break;
+		default:
+			System.out.println("ERROR: Ungueltiger parameter in public static Image getWormholeImage(int anniNr)");
+		}
+		return im;
+	}
 	
 	public static Image getPacmanImage(Dir dir, int anniNr) {
 		Image im = null;
@@ -200,7 +219,7 @@ public class Var implements Konstanten{
 	}
 	
 	private static void loadImages() {
-		String p = "res/img/pacman/";
+		String p = "res/img/pacman/", w = "res/img/Wormhole/";
 		ghost = new ImageIcon("res/img/ghost.png").getImage();
 		goodGoast = new ImageIcon("res/img/goodGoast.png").getImage();
 		pille_img = new ImageIcon("res/img/pille.png").getImage();
@@ -217,6 +236,9 @@ public class Var implements Konstanten{
 		pacman2right = new ImageIcon(p + "right1.png").getImage();
 		pacman3right = new ImageIcon(p + "right2.png").getImage();
 		pacman4right = new ImageIcon(p + "right3.png").getImage();
+		wormhole1 = new ImageIcon(w + "1.png").getImage();
+		wormhole2 = new ImageIcon(w + "2.png").getImage();
+		wormhole3 = new ImageIcon(w + "3.png").getImage();
 	}
 	
 	private static ArrayList<String> readFile(String FileUrl) {

@@ -22,4 +22,6 @@ public interface GuiAccess {
 	public void drawGameOver(boolean gewonnen);
 	
 	public void drawFoodPoint(int x, int y, int index);
+	
+	public void drawWormhole(int x, int y, int anniNr, int index);
 }

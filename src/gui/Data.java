@@ -33,6 +33,10 @@ public class Data {
 		public int x, y;
 	}
 	
+	public class Wormhole{
+		public int x, y, anniNr;
+	}
+	
 	public Pacman pacman = new Pacman();
 	public DData data = new DData();
 	public Ghost[] ghost = new Ghost[Var.nrOfGhosts];
@@ -44,6 +48,7 @@ public class Data {
 	public int punkte = 0;
 	public int leben = 3;
 	public boolean pacmanCanEatGhosts = false;
+	public Wormhole[] wormhole = {new Wormhole(), new Wormhole()};
 	
 	public Data() {
 		for (int i = 0; i < Var.nrOfGhosts; i++) {

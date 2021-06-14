@@ -7,7 +7,7 @@ X . X . . . X . . . . . . . . . X . . . X . X
 X . X X X . X X X X X . X X X X X . X X X . X
 X . . . . . . . . . . . . . . . . . . . . . X
 X X X X X . X . X X X o X X X . X . X X X X X
-. . . . . . X . X . G G G . X . X . . . . . .
+w . . . . . X . X . G G G . X . X . . . . . w
 X X X X X . X . X . X X X . X . X . X X X X X
 X . . . . . X . X . . . . . X . X . . . . . X
 X . X X X . X . X X X o X X X . X . X X X . X

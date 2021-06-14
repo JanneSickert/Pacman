@@ -37,6 +37,9 @@ public class Gui extends JPanel implements Konstanten, GuiAccess{
 		if (data.gameOver) {
 			drawGameOver(g2d);
 		} else {
+			for (int i = 0; i < data.wormhole.length; i++) {
+				g.drawImage(Var.getWormholeImage(data.wormhole[i].anniNr), data.wormhole[i].x, data.wormhole[i].y, this);
+			}
 			for (int i = 0; i < Var.nrOfPills; i++) {
 				if (data.pill[i] != null) {
 					g.drawImage(Var.pille_img, data.pill[i].x, data.pill[i].y, this);
@@ -149,6 +152,15 @@ public class Gui extends JPanel implements Konstanten, GuiAccess{
 	public void drawFoodPoint(int x, int y, int index) {
 		data.foodPoint[index].x = x;
 		data.foodPoint[index].y = y;
+		revalidate();
+		repaint();
+	}
+
+	@Override
+	public void drawWormhole(int x, int y, int anniNr, int index) {
+		data.wormhole[index].x = x;
+		data.wormhole[index].y = y;
+		data.wormhole[index].anniNr = anniNr;
 		revalidate();
 		repaint();
 	}

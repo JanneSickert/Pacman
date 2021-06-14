@@ -28,7 +28,10 @@ public class Pacman implements Konstanten {
 		public static int nrOfGhosts = 0;
 		public static int nrOfPills = 0;
 		public static int nrOfWalls = 0;
+		public static int wormhole = 0;
 	}
+	
+	public static int w1x = 0, w1y = 0, w2x = 0, w2y = 0;
 
 	Pacman() {
 		frame = new MyFrame();
@@ -50,6 +53,16 @@ public class Pacman implements Konstanten {
 					Index.nrOfAllPoints++;
 				} else if (Var.co[y][x] == VOID) {
 					// Do nothing.
+				} else if (Var.co[y][x] == WORMHOLE) {
+					frame.gui.drawWormhole(gc(x), gc(y), 0, Index.wormhole);
+					if (Index.wormhole == 0) {
+						w1x = gc(x);
+						w1y = gc(y);
+					} else {
+						w2x = gc(x);
+						w2y = gc(y);
+					}
+					Index.wormhole++;
 				} else {
 					System.out.println("ERROR: Unexpected char at Var.co[" + x + "][" + y + "]");
 				}
@@ -61,7 +74,7 @@ public class Pacman implements Konstanten {
 	public static class GameClock implements ActionListener {
 
 		Timer timer;
-		int anniNr = 0;
+		int anniNr = 0, anniNrWormhole = 0;
 		final int ANNI_LENGTH = 4;
 		final int STEP = 15;
 		private int takts = 0;
@@ -83,6 +96,16 @@ public class Pacman implements Konstanten {
 			checkGhost();
 			checkWinn();
 			moveGhost();
+			annimateWormhole();
+		}
+		
+		private void annimateWormhole() {
+			frame.gui.drawWormhole(w1x, w1y, anniNrWormhole, 0);
+			frame.gui.drawWormhole(w2x, w2y, anniNrWormhole, 1);
+			anniNrWormhole++;
+			if (anniNrWormhole > 2) {
+				anniNrWormhole = 0;
+			}
 		}
 		
 		private Dir getRandomDir() {
